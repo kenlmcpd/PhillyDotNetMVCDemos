@@ -1,0 +1,332 @@
+MVC6
+
+==========================================
+
+This has been done for you
+
+Create A Web Application
+	Open Visual studio
+	Create a new project
+	Select the newest version of the .net framework you have (4.6.1)
+	Uncheck Add Application Insights
+	Highlight ASP.NET Web Application
+	Name it something
+	Highlight ASP.NET 5 Preview Templates – Web Application
+	Click on Change Authentication – Select Individual User Accounts
+	Click Host in Cloud if you have an Azure account
+	Click OK
+
+=============================================
+
+Review The New Look
+	Open properties and Lauchsettings.json
+		Look at iis settings and review how to change local port, and authentication
+		Review the wwwroot and child folders, especially Lib, js and css
+	Click on Home Controller
+		Notice IactionResult instead of ActionResult
+	Migrations – this time it is created for us
+	Models – our domain models
+	Services – Notice MessageServices – These are used with account
+	Views – razor and Jquery – no difference
+	Open Config.json – Notice we have Connection and App Settings section
+	Open project.json – Notice the differences
+	Open Startup – Notice the differences
+
+==============================================
+
+Exercise - No longer need to inherit from Controller 
+
+	Open Home Controller
+	Comment out : Controller
+		Comment out all actions but Index
+		Comment out return View(); in index method
+		Write return new ContentResult() {Content = "THIS IS MY TEST"};
+		Run application
+	
+	Remove all the commented code
+
+==============================================
+
+Exercise - Configuration with Dependency Injection
+
+	Open config.json
+	Create a section named; AppSettings and 
+	Add:
+		"PDNTest":  "It Works"
+	Feel freee to add something else using the same json format
+	Add a new class named AppSettings
+	Add the following properties
+
+	public class AppSettings
+   	{
+    	 public string SiteTitle { get; set; }
+    	 public string PDNTest { get; set; }
+		 // add others here
+   	}
+
+	Open Startup.cs
+		Go to the public void ConfigureServices(IServiceCollection services)  method
+		Add:
+			services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+
+	Open the home controller
+		Add:
+			 using Microsoft.Extensions.OptionsModel;
+		Add a constructor
+
+			public HomeController(IOptions<AppSettings> appSettings) 
+			{
+				var test = appSettings.Options.PDNTest;
+				var test2 = test;
+			}
+	
+	Put a breakpoint on the test2 line and run solution
+
+==============================================
+
+Exercise - Bootstrap Overview
+
+	If not still running, run the web app
+	Change the size of the web browser, to see how responsive design works
+
+	Open _layout.cshtml
+	View key class names in library
+	Reminder BootStrap resides at wwwroot/lib
+	Open the Home index view 
+		Modify the text (User Choice in the 4 <div class="carousel-caption"> sections
+		Change the button in each section to the 4 different button types
+			Default, primary, success, danger
+
+	On bottom of the page change the column types to make it 3 columns
+
+	Add a link to the menu
+	Open Shared/_layout.cshtml
+		Add Menu item and - Notice the new way of setting url  
+
+	Review Navbar
+		Highlight navbar-inverse  and cut it out. 
+		Save and refresh the web page
+		Paste navbar-inverse back in and remove navbar-fixed-top
+		Save and refresh the page
+		Put Navbar-fixed-top back
+
+	Change the footer
+		Change 2016 – WebApplication1 to 
+			<p>&copy; @DateTime.Now.Year - @AppSettings.Options.SiteTitle</p>
+		Add to the top of the page
+			@using Microsoft.Framework.OptionsModel
+			@using WebApplication1 
+			@inject IOptions<AppSettings> AppSettings
+		Stop and rerun the application
+
+==============================================
+
+Exercise - Data Handling
+
+	Copy over the Models from the API
+		Change the namespace
+	Copy the driver context stuff to ApplicationDb Context
+		public Microsoft.Data.Entity.DbSet<Vehicle> Vehicles { get; set; }
+        public Microsoft.Data.Entity.DbSet<VehicleType> VehicleTypes { get; set; }
+        public Microsoft.Data.Entity.DbSet<VehicleMake> VehicleMakes { get; set; }
+        public Microsoft.Data.Entity.DbSet<Driver> Drivers { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Vehicle>().Property(v => v.VehicleModel).IsRequired();
+            modelBuilder.Entity<VehicleType>().Property(v => v.VehicleTypeName).IsRequired();
+            modelBuilder.Entity<VehicleMake>().Property(v => v.VehicleMakeName).IsRequired();
+            modelBuilder.Entity<Driver>().Property(v => v.DriverName).IsRequired();
+        }
+	Copy over the API controller into the controllers folder
+		Rename the namespace and remae the file and class to DriversApi
+	Build to play it safe
+
+	Time to make the database
+		Note Entityframework.Commands were already added for us
+	Right click on the project file
+	Select open folder in file explorer
+	Copy the path
+	Open a command prompt (Windows-R)
+	Change directory to the path you copied
+	Type:
+		 dnvm use  10.0.0-rc1-update1
+	You should see adding path
+	Type: 
+		dnx ef migrations Add WebApplicationMigration_1
+	Type: 
+		dnx ef database update
+
+	Notice the database at c:users\<username>
+	Open SQL Server Object Explorer
+	Open (localdb\mssqllocaldb), under databases show tables
+	Run Application
+	Run Postman with new url and input some data
+		 Add Drivers Controller
+	Right click on the HomeController, copy it and paste it
+	Rename the copied version to DriversController.cs
+	Rename the class and constructor to DriversController
+	Delete the About, Contact and Error methods
+	Copy the Home View Folder and paste it back to the Views folder
+	Rename it to Drivers
+	Open the Drivers/index view
+	Delete all the content
+	Replace with
+
+<div class="row">
+    <br />
+</div>
+<div class="container">
+    <div class="row spacer25">
+        <div class="col-md-3">
+            <a class="btn btn-primary" id="PostFormBtn">Show Post Form</a>
+        </div>
+        <div class="col-md-3">
+            <a class="btn btn-primary" id="PutFormBtn">Show Put Form</a>
+        </div>
+        <div class="col-md-3">
+            <a class="btn btn-primary" id="GetFormBtn">Show Get Form</a>
+        </div>
+        <div class="col-md-3">
+            <a class="btn btn-primary" id="DelFormBtn">Show Delete Form</a>
+        </div>
+    </div>
+</div>
+
+<div class="container spacer25">
+    <form id="PostForm">
+        <div class="row">
+            <div class="col-md-4 align-right"> </div>
+            <div class="col-md-4">
+                <h1>Post Data To Api</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 align-right">Driver Name:</div>
+            <div class="col-md-4">
+                <input type="text" id="postdrivername" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 align-right">Vehicle Type:</div>
+            <div class="col-md-4">
+                <input type="text" id="posttype" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 align-right spacer10">Manufacture:</div>
+            <div class="col-md-4 spacer10">
+                <input type="text" id="postmanufacture" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 align-right spacer10">Model:</div>
+            <div class="col-md-4 spacer10">
+                <input type="text" id="postmodel" />
+            </div>
+        </div>
+        <div class="row">
+            <div id="PostMessage" class="col-md-4"> </div>
+            <div class="col-md-4 align-right spacer25">
+                <input class="btn btn-success" type="button" id="postsubmit" value="Post Data to Api" />
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="container spacer" id="PutForm">
+    <div class="row">Put Data To Api</div>
+</div>
+
+
+<div class="container spacer" id="GetForm">
+    <div class="row">Get Data From Api</div>
+    <div id="getresult"></div>
+</div>
+
+<div class="container spacer" id="DelForm">
+    <div class="row">Delete Data From Api</div>
+</div>
+
+
+@section scripts
+{
+    <script>
+
+        $(document).ready(function() {
+
+            hideall();
+
+            $("#PostFormBtn").click(function() {
+                hideall();
+                $("#PostForm").show(600);
+            });
+
+            $("#PutFormBtn").click(function() {
+                hideall();
+                $("#PutForm").show(600);
+            });
+
+            $("#GetFormBtn").click(function() {
+                hideall();
+                $("#GetForm").show(600);
+
+                $.get("~/api/drivers", function (data) {
+                    alert(data);
+                    $.each(data, function() {
+                        alert(this.name);
+                        $("#getresult").append(this + "<hr/>");
+                    });
+                });
+            });
+
+            $("#DelFormBtn").click(function() {
+                hideall();
+                $("#DelForm").show(600);
+            });
+
+            $('#postsubmit').click(function() {
+
+                var driverInfo =
+                {
+                    DriverName : $('#postdrivername').val(),
+                    VehicleType: $('#posttype').val(),
+                    Manufacture: $('#postmanufacture').val(),
+                    Model: $('#postmodel').val()
+                }
+
+                var request = $.ajax({
+                    dataType: 'json',
+                    contentType: 'application/x-www-form-urlencoded',
+                    //contentType: 'application/json; charset=utf-8',
+                    url: '~/api/drivers',
+                    type: 'Post',
+                    data: driverInfo 
+                    });
+                request.done(function (xhr, textstatus) {
+                    $('#PostMessage').append("<h3>Driver Saved</h3>" + xhr.status + " " + textstatus);
+                });
+
+                request.fail(function (xhr, textstatus) {
+                    $('#PostMessage').append("<h3>Failed to save data</h3><br/>" + xhr.status + " " + textstatus);
+                });
+            });
+        });
+
+        function hideall() {
+            $('#PostForm').hide(600);
+            $('#PutForm').hide(600);
+            $('#GetForm').hide(600);
+            $('#DelForm').hide(600);
+        }
+
+
+    </script>
+}
+
+	Open Views/Shared/_layout
+	Modify the last menu item to go to your new Drivers/index page
+
+
+
+

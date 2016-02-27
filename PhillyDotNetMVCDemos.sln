@@ -1,0 +1,77 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B97C45C4-66DC-46CB-95A4-BA11C9C8A371}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DC3D6EEC-796E-4133-8309-6A1F89DD1CCD}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo1", "Demo1", "{84E31511-E088-46D0-94FE-B0B149F723E5}"
+	ProjectSection(SolutionItems) = preProject
+		src\Demo1\Demo 1.txt = src\Demo1\Demo 1.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo2-EmptyApplication", "Demo2-EmptyApplication", "{1102243B-E3B3-48C7-A92E-4723FE9819B9}"
+	ProjectSection(SolutionItems) = preProject
+		src\Demo2\Demo2.txt = src\Demo2\Demo2.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo3-TagHelpers", "Demo3-TagHelpers", "{698D7E35-52A8-41C5-B143-985FEC01F077}"
+	ProjectSection(SolutionItems) = preProject
+		src\Demo3\Demo3.txt = src\Demo3\Demo3.txt
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Demo4-CustomRoute", "src\CustomRouteDemo\Demo4-CustomRoute.xproj", "{F46FD60E-A9A5-455C-8532-174CC0BD124B}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Demo5-Localization", "src\Demo5-Localization\Demo5-Localization.xproj", "{E695AF50-5F4C-472F-9DD7-D2D5CA44F31C}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Demo6-WebApi", "src\Demo6-WebApi\Demo6-WebApi.xproj", "{70E1B32F-3973-4F56-87B8-1333ADF8D0C4}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Demo7-MVC6", "src\Demo7-MVC6\Demo7-MVC6.xproj", "{6FB0488D-7577-4814-B522-2FE83B8423AA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo8-Deployment", "Demo8-Deployment", "{7565E8E6-A373-4CA1-81E7-B4E7F78BD451}"
+	ProjectSection(SolutionItems) = preProject
+		src\Demo8-Deployment\Demo8.txt = src\Demo8-Deployment\Demo8.txt
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F46FD60E-A9A5-455C-8532-174CC0BD124B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F46FD60E-A9A5-455C-8532-174CC0BD124B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F46FD60E-A9A5-455C-8532-174CC0BD124B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F46FD60E-A9A5-455C-8532-174CC0BD124B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E695AF50-5F4C-472F-9DD7-D2D5CA44F31C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E695AF50-5F4C-472F-9DD7-D2D5CA44F31C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E695AF50-5F4C-472F-9DD7-D2D5CA44F31C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E695AF50-5F4C-472F-9DD7-D2D5CA44F31C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70E1B32F-3973-4F56-87B8-1333ADF8D0C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70E1B32F-3973-4F56-87B8-1333ADF8D0C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70E1B32F-3973-4F56-87B8-1333ADF8D0C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70E1B32F-3973-4F56-87B8-1333ADF8D0C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FB0488D-7577-4814-B522-2FE83B8423AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FB0488D-7577-4814-B522-2FE83B8423AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FB0488D-7577-4814-B522-2FE83B8423AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FB0488D-7577-4814-B522-2FE83B8423AA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{84E31511-E088-46D0-94FE-B0B149F723E5} = {B97C45C4-66DC-46CB-95A4-BA11C9C8A371}
+		{1102243B-E3B3-48C7-A92E-4723FE9819B9} = {B97C45C4-66DC-46CB-95A4-BA11C9C8A371}
+		{698D7E35-52A8-41C5-B143-985FEC01F077} = {B97C45C4-66DC-46CB-95A4-BA11C9C8A371}
+		{F46FD60E-A9A5-455C-8532-174CC0BD124B} = {B97C45C4-66DC-46CB-95A4-BA11C9C8A371}
+		{E695AF50-5F4C-472F-9DD7-D2D5CA44F31C} = {B97C45C4-66DC-46CB-95A4-BA11C9C8A371}
+		{70E1B32F-3973-4F56-87B8-1333ADF8D0C4} = {B97C45C4-66DC-46CB-95A4-BA11C9C8A371}
+		{6FB0488D-7577-4814-B522-2FE83B8423AA} = {B97C45C4-66DC-46CB-95A4-BA11C9C8A371}
+		{7565E8E6-A373-4CA1-81E7-B4E7F78BD451} = {B97C45C4-66DC-46CB-95A4-BA11C9C8A371}
+	EndGlobalSection
+EndGlobal

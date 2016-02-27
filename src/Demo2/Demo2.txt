@@ -1,0 +1,64 @@
+﻿Create a ASP.NET5 Application
+
+	Create a new project (web)
+	Make sure you have selected the latest version of the .net framework in the dropdown. I probably already is set
+	Uncheck the Add Application Insights to the project
+	Don’t worry about the name, just click OK
+	Under ASP.NET 5 Templates, Select Empty
+	Click OK
+	Click on IIS Express to run the application
+	Stop the application 
+	Change the IIS Express dropdown to web
+	Click on web
+	Notice the web browser did not open
+	See Command Windows showing the url of the web listener
+	Open that url in a web browser
+	Shut down the application
+	Under Solution Items, open global.json
+	Under WebApplicationx, open properties and launch settings
+		Change The applicationUrl to a different port
+		Change the run dropdown back to iis express 
+		Click on Run IIS Express
+			If not new number shut application down, make sure IIS Express is not running and run it again
+		Open project.json
+		In the commands type  --server.urls http://localhost:5102 after Microsoft.AspNet.Server.Kestrel 
+		Open launchSettings.json
+		Under Web and under "command":"web" type
+				"launchBrowser": true,
+				"launchUrl": http://localhost:5102,
+		Change back from IIS Express to web
+		Run the app – note the url in the command windows
+		The browser will open automatically
+		Shut down the web app
+		Open Startup.cs
+		Notice Static Main – just like a console app
+		Notice app.run, you can create an entire web app here
+			You can read static files, do things dynamically, use Angular, web forms or mvc
+		Right click on WebApplicaitonx and select properties
+			Application has DNX SDK
+			Debug allows you to launch the url (it creates what we did)
+	
+	Add Angular page
+		Open Manage NuGet
+			Search for and install Microsoft.AspNet.StaticFiles
+		Open Startup.cs
+			Change the signature of Configure to:
+				public void Configure(IApplicationBuilder application, IApplicationEnvironment environment)
+		Between use iis and run, type: 
+			var indexPage = System.IO.File.ReadAllText($"{environment.ApplicationBasePath}/index.html");
+		Change the Hello World to indexPage
+	Right click on the project and add new item
+		select client side and html page
+		change the name to index.html
+	Update the html to angular
+		Within the body tags add:
+
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <div ng-app="test">
+        <p>Type Something</p>
+        <p>Name: <input type="text" ng-model="name"></p>
+        <p ng-bind="name"></p>
+    </div>
+
+	Run the application
+	Close this web application

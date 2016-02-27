@@ -1,0 +1,265 @@
+﻿Create a WebApi
+
+=== This has been completed for you =======
+	Open Visual Studio or close any other project you have open
+	Create a new project (web)
+	Make sure you have selected the latest version of the .net framework in the dropdown. I probably already is set
+	Uncheck the Add Application Insights to the project
+	Don’t worry about the name, just click OK
+	Under ASP.NET 5 Templates, Select WebApi
+	Click OK
+==============================================
+
+Project Review
+
+	launchsettings.json is a little different – has api/values
+	project.json has a couple different dependencies
+	if we wanted this to work outside of iis, we would have to add our settings to command and in web launch settings
+	Startup.cs has a lot more things
+	We now have app config
+	Services (AddMvc)
+	We are configuring Logging, using static files and mvc
+	Open the ValuesController
+	Notice we have our route here
+	And the methods are automatically scaffolded for us
+
+==============================================
+
+Run the api web application
+
+	Because the application is set to run the url, we see the values returned by the get call
+	Type http://localhost:49787/api/values/1 and we get back a single value
+
+===============================================
+
+Add NuGet - Entity Framework - Try to update = Hopefully everyone can do this
+
+
+	Right click on the project and select manage nuget
+	Install EntityFramework.MicrosoftSqlServer
+	Install EntityFramework.Commands
+	Try Building
+	Open Project.json
+	In the commands section add
+		"gen": "Microsoft.Framework.CodeGeneration",
+		"ef": "EntityFramework.Commands"
+	Add a new folder to the project name Models 
+	Right click on Models
+	Add a new class to the Model folder named DriverModel.cs
+	Add using Microsoft.Data.Entity;
+	Type: 
+	public class DriverContext : DbContext
+	{
+	}
+
+	Add the following classes to the same driver model
+	public class Vehicle
+   {
+          public int VehicleId { get; set; }
+          public VehicleType VehicleType { get; set; }
+          public Make VehicleMake { get; set; }
+          public string VehicleModel { get; set; }
+  }
+
+	public class VehicleType
+	{
+          public int VehicleTypeId { get; set; }
+          public string VehicleTypeName { get; set; }
+	}
+
+	public class Make
+	{
+           public int MakeId { get; set; }
+           public string Name { get; set; }
+	}
+
+	public class Driver
+	{
+         public int DriverId { get; set; }
+         public string DriverName { get; set; }
+         public Vehicle Vehicle { get; set; }
+	}
+
+	Add: to DriverContext class
+
+		public Microsoft.Data.Entity.DbSet<Vehicle> Vehicles { get; set; }
+		public Microsoft.Data.Entity.DbSet<VehicleType> VehicleTypes { get; set; }
+		public Microsoft.Data.Entity.DbSet<Make> Makes { get; set; }
+		public Microsoft.Data.Entity.DbSet<Driver> Drivers { get; set; }
+
+	Add to the inside of this method:
+	
+	protected override void OnModelCreating(ModelBuilder modelBuilder)
+	{
+          modelBuilder.Entity<Vehicle>().Property(v => v.VehicleModel).IsRequired();
+          modelBuilder.Entity<VehicleType>().Property(v => v.VehicleTypeName).IsRequired();
+          modelBuilder.Entity<Make>().Property(v => v.Name).IsRequired();
+          modelBuilder.Entity<Driver>().Property(v => v.DriverName).IsRequired();
+	}
+
+   Create another new model named DriverInfo.cs
+   Add the following
+		public int DriverId { get; set; }
+		public string DriverName { get; set; }
+		public string VehicleType { get; set; }
+		public string Manufacture { get; set; }
+		public string Model { get; set; }
+   Make sure your project builds!
+
+   Register our context using Dependency Injection
+		Create our connection string
+	Open the appsettings.json file	
+	Enter the following
+"Data": {
+		"DefaultConnection": {
+			"ConnectionString": "Server=(localdb)\\MSSQLLocalDB;Database=WebApiLab;Trusted_Connection=True;"
+		}
+
+Open Startup
+	Add:
+		 Using Microsoft.Data.Entity;
+	
+	Notice how appsettings is loaded in the constructor
+	Go to the ConfigureServices section
+	Add:
+		services.AddEntityFramework()
+		.AddSqlServer()
+		.AddDbContext<DriverContext>(ef => ef.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
+	
+   Build to play it safe
+
+===================================================
+
+Now it is time to make the database
+
+	Remember we added Entityframework.Commands in the Project.json file
+
+	Right click on the project file
+		Select open folder in file explorer
+		Copy the path
+
+	Open a command prompt (Windows-R)
+		Change directory to the path you copied
+		Type dnvm use  10.0.0-rc1-update1
+		You should see adding path
+	Type: 
+		dnx ef migrations Add WebApiMigration_1
+
+	Type: 
+		dnx ef database update
+
+	NOTE: These commands have changed 2 times since beta
+
+	We now have a migrations folder in the path
+	Open Migrations folder, look at some of the code
+	We also have a database a c:users\<username>
+
+	In Visual Stuio: Open SQL Server Object Explorer
+	Open (localdb\mssqllocaldb), under databases view tables
+	
+	Open LaunchSettings in properties
+		Change to api/drivers
+		Leave launch browser to true
+		Change the name of the ValuesController to DriversController
+	Add: 
+		using Namespace.Models;
+	Add: 
+		private DriverContext _context;
+	Add a constructor with 
+		Public DriversController(DriverContext context)
+		{
+			_context = context;
+		}
+
+	Change the signature of the Get to public IEnumerable<DriverInfo> Get()
+	Change the code in the Get method to 
+		var resultSet new List<DriverInfo>();
+		return restultSet;
+
+	Add a breakpoint in the constructor
+	Run the application
+	Notice context has everything you need to know about your database?  
+	Stop the application
+
+	Change the code in the Get() to
+		var resultSet = new List<DriverInfo>();
+		var result = _context.Drivers.ToList();
+
+		foreach(var driver in result)
+	    {
+                resultSet.Add(
+                    new DriverInfo
+                    {
+                        DriverId = driver.DriverId,
+                        DriverName = driver.DriverName,
+                        Manufacture = driver.Vehicle.VehicleMake.Name,
+                        Model = driver.Vehicle.VehicleModel,
+                        VehicleType = driver.Vehicle.VehicleType.VehicleTypeName
+                    });
+         }
+
+            return resultSet;
+
+	Change the signature of Get(string id) from string to DriverInfo
+		public DriverInfo Get(int id)
+
+	Add this code to the method
+		var driver = _context.Drivers.FirstOrDefault(d => d.DriverId == id);
+		If (driver == null) return new DriverInfo();
+		return new DriverInfo
+        {
+                DriverId = driver.DriverId,
+                DriverName = driver.DriverName,
+                Manufacture = driver.Vehicle.VehicleMake.Name,
+                Model = driver.Vehicle.VehicleModel,
+                VehicleType = driver.Vehicle.VehicleType.VehicleTypeName
+         };
+
+	Change the signature of the Post method from string value to DriverInfo driverInfo
+	Enter this code in the method
+			var vehicleType = new VehicleType { VehicleTypeName = driverInfo.VehicleType };
+            var vehicleMake = new VehicleMake { VehicleMakeName = driverInfo.Manufacture };
+            var vehicle = new Vehicle { VehicleMake = vehicleMake, VehicleModel = driverInfo.Model , VehicleType = vehicleType };
+            var driver = new Driver { DriverName = driverInfo.DriverName, Vehicle = vehicle };
+            //_context.VehicleTypes.Add(vehicleType);
+            //_context.MVehicleMakes.Add(vehicleMake);
+            //_context.Vehicles.Add(vehicle);
+            _context.Drivers.Add(driver);
+            var count = _context.SaveChanges();
+
+	Change the signature of the put method from string value to DriverInfo driverInfo
+	Enter this code in the method
+			var driver = _context.Drivers.FirstOrDefault(d => d.Id == id);
+            if (driver == null) return;
+
+            driver.Vehicle.VehicleType.VehicleTypeName = (driverInfo.VehicleType != driver.Vehicle.VehicleType.VehicleTypeName) ? driverInfo.VehicleType : driver.Vehicle.VehicleType.VehicleTypeName;
+            driver.Vehicle.VehicleMake.VehicleMakeName = (driverInfo.Manufacture != driver.Vehicle.VehicleMake.VehicleMakeName) ? driverInfo.Manufacture : driver.Vehicle.VehicleMake.VehicleMakeName;
+            driver.Vehicle.VehicleModel = (driverInfo.Model != driver.Vehicle.VehicleModel) ? driverInfo.Model : driver.Vehicle.VehicleModel;
+            driver.DriverName = (driverInfo.DriverName != driver.DriverName) ? driverInfo.DriverName : driver.DriverName;
+
+            var count = _context.SaveChanges();
+
+	Change the code in the delete method to
+			var driver = _context.Drivers.FirstOrDefault(d => d.Id == id);
+            if (driver == null) return;
+            _context.Drivers.Remove(driver);
+            var count = _context.SaveChanges();
+
+	Start the webApi and Open Postman
+		Insert some information
+		http://localhost:49787/api/drivers
+		Change to Post
+	Add to the body
+		{
+			"DriverName": "Ken",
+			"Manufacture": "Toyota",
+			"Model" :   "Camary",
+			"VehicleType" : "Sedan"
+		}
+		Post the data to the database
+
+	   Change type to get - Press Send
+	   Change to get/id  (Where Id is one of your ID') - - Press Send
+
+	Change to put – Modify the data - Press Send
+	Change back to get – see the change

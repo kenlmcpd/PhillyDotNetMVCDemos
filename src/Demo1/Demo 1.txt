@@ -1,0 +1,19 @@
+Getting Started
+	Open C:\Users\<YOURNAME>\ .dnx\runtimes
+	These are the runtimes in your computer
+	Open a command prompt in admin mode
+	Type DNVM
+	To list what versions, you have type  DNVM LIST
+	
+WARNING THERE MIGHT NOT BE ENOUGH BANDWIDTH TO DO THIS!!!!
+	
+ - You can install by typing DNVM INSTALL LATEST
+ - You can install a specific version by typing DMVM INSTALL LATEST -R CORECLR -ARCH X64
+ - You can change the default runtime by typing DNVM USE 1.0.0-RC1-UPDATE1 -R CORECLR -ARCH X64 –P  
+ 	- The -P is permanent
+ - To use a Windows as the default you would type DNVM USE 1.0.0-RC1-UPDATE1 -R CLR -ARCH X64 –P  
+
+For Core CLR use: CORECLR
+For WIN use: CLR
+
+
