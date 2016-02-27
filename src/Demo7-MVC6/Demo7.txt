@@ -326,6 +326,24 @@ Exercise - Data Handling
 
 	Open Views/Shared/_layout
 	Modify the last menu item to go to your new Drivers/index page
+	Run and test the application
+
+==============================================
+
+Exercise - Identity and Authorization
+	
+	Add identity to DriversApi.cs
+		Add [Authorize] above the class
+		Add [AllowAnonymous] above both Gets()
+
+	Run the application
+	Login / Create a user
+	Retest the create and update api
+
+==============================================
+
+Exercise - Rob Add Bower and Grunt
+
 
 
 
