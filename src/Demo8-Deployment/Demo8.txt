@@ -1,4 +1,42 @@
 Deployment scenarios
 
+IIS:
+  Prerequisite:  
+    1) install httpplatformhandler using the Windows Platform Installer
+    2) http://www.iis.net/downloads/microsoft/httpplatformhandler 
+    
+Create a publish profile 
+  Make it a file publish
+  Publish to a file location on your machine -> (know where you saved it)
+
+Copy the published files to your server
+Example: C:\inetpub\aspnetdemo
+    You will be copying the approot, logs, wwwroot folders and web.config file
+    Feel free to look through the folders and files
+      - approot has the runtimes and packages folders
+    
+Open IIS
+Create a new site (if you are planning on using port 80, shut down the default site
+  Name the site aspNet5Demo
+  Point the physical path to C:\inetpub\aspnetdemo\wwwroot
+  Click OK
+  Open the newly create aspnet5Demo appPool
+    Change the CLR version to No Managed Code
+  Click back on the aspnet5Demo web site
+    Click on Configuration Manager
+      The section dropdown should be on system.webServer/httpPlatform
+      The from should be aspnet5Demo Web.Config
+      Notice the process path - ../approot/web.cmd
+      If you need to, turn logging on at stdoutLogEnabled
+        The log will be at C:\inetpub\aspnet5Demo\logs
+        
+  Click browse on IIS
+  or go to the link from your computer
+  
+  
+  
+
+
+
 
 
