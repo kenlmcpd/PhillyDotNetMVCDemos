@@ -139,7 +139,11 @@ Exercise - Data Handling
             modelBuilder.Entity<Driver>().Property(v => v.DriverName).IsRequired();
         }
 	Copy over the API controller into the controllers folder
-		Rename the namespace and remae the file and class to DriversApi
+		Rename the namespace and rename the file and class to DriversApi
+		Make sure the class name and constructor are also DriversApiController
+		Change the base route to api/Drivers
+		Add a using statement pointing to the Models; and to ViewModels;
+		Change DriversContext to ApplicationDbContext
 	Build to play it safe
 
 	Time to make the database
