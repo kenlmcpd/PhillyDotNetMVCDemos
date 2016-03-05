@@ -54,47 +54,47 @@ Add NuGet - Entity Framework - Try to update = Hopefully everyone can do this
 
 	Add the following classes to the same driver model
 	public class Vehicle
-   {
-          public int VehicleId { get; set; }
-          public VehicleType VehicleType { get; set; }
-          public Make VehicleMake { get; set; }
-          public string VehicleModel { get; set; }
-  }
+    {
+        public int VehicleId { get; set; }
+        public VehicleType VehicleType { get; set; }
+        public VehicleMake VehicleMake { get; set; }
+        public string VehicleModel { get; set; }
+    }
 
-	public class VehicleType
-	{
-          public int VehicleTypeId { get; set; }
-          public string VehicleTypeName { get; set; }
-	}
+    public class VehicleType
+    {
+        public int VehicleTypeId { get; set; }
+        public string VehicleTypeName { get; set; }
+    }
 
-	public class Make
-	{
-           public int MakeId { get; set; }
-           public string Name { get; set; }
-	}
+    public class VehicleMake
+    {
+        public int MakeId { get; set; }
+        public string VehicleMakeName { get; set; }
+    }
 
-	public class Driver
-	{
-         public int DriverId { get; set; }
-         public string DriverName { get; set; }
-         public Vehicle Vehicle { get; set; }
-	}
+    public class Driver
+    {
+        public int DriverId { get; set; }
+        public string DriverName { get; set; }
+        public Vehicle Vehicle { get; set; }
+    }
 
 	Add: to DriverContext class
 
-		public Microsoft.Data.Entity.DbSet<Vehicle> Vehicles { get; set; }
-		public Microsoft.Data.Entity.DbSet<VehicleType> VehicleTypes { get; set; }
-		public Microsoft.Data.Entity.DbSet<Make> Makes { get; set; }
-		public Microsoft.Data.Entity.DbSet<Driver> Drivers { get; set; }
+	public Microsoft.Data.Entity.DbSet<Vehicle> Vehicles { get; set; }
+        public Microsoft.Data.Entity.DbSet<VehicleType> VehicleTypes { get; set; }
+        public Microsoft.Data.Entity.DbSet<VehicleMake> VehicleMakes { get; set; }
+        public Microsoft.Data.Entity.DbSet<Driver> Drivers { get; set; }
 
 	Add to the inside of this method:
 	
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
-          modelBuilder.Entity<Vehicle>().Property(v => v.VehicleModel).IsRequired();
-          modelBuilder.Entity<VehicleType>().Property(v => v.VehicleTypeName).IsRequired();
-          modelBuilder.Entity<Make>().Property(v => v.Name).IsRequired();
-          modelBuilder.Entity<Driver>().Property(v => v.DriverName).IsRequired();
+	    modelBuilder.Entity<Vehicle>().Property(v => v.VehicleModel).IsRequired();
+            modelBuilder.Entity<VehicleType>().Property(v => v.VehicleTypeName).IsRequired();
+            modelBuilder.Entity<VehicleMake>().Property(v => v.VehicleMakeName).IsRequired();
+            modelBuilder.Entity<Driver>().Property(v => v.DriverName).IsRequired();
 	}
 
    Create another new model named DriverInfo.cs
