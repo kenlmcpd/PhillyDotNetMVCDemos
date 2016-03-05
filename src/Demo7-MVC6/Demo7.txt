@@ -11,8 +11,8 @@ Create A Web Application
 	Uncheck Add Application Insights
 	Highlight ASP.NET Web Application
 	Name it something
-	Highlight ASP.NET 5 Preview Templates – Web Application
-	Click on Change Authentication – Select Individual User Accounts
+	Highlight ASP.NET 5 Preview Templates â€“ Web Application
+	Click on Change Authentication â€“ Select Individual User Accounts
 	Click Host in Cloud if you have an Azure account
 	Click OK
 
@@ -24,13 +24,13 @@ Review The New Look
 		Review the wwwroot and child folders, especially Lib, js and css
 	Click on Home Controller
 		Notice IactionResult instead of ActionResult
-	Migrations – this time it is created for us
-	Models – our domain models
-	Services – Notice MessageServices – These are used with account
-	Views – razor and Jquery – no difference
-	Open Config.json – Notice we have Connection and App Settings section
-	Open project.json – Notice the differences
-	Open Startup – Notice the differences
+	Migrations â€“ this time it is created for us
+	Models â€“ our domain models
+	Services â€“ Notice MessageServices â€“ These are used with account
+	Views â€“ razor and Jquery â€“ no difference
+	Open Config.json â€“ Notice we have Connection and App Settings section
+	Open project.json â€“ Notice the differences
+	Open Startup â€“ Notice the differences
 
 ==============================================
 
@@ -111,7 +111,7 @@ Exercise - Bootstrap Overview
 		Put Navbar-fixed-top back
 
 	Change the footer
-		Change 2016 – WebApplication1 to 
+		Change 2016 â€“ WebApplication1 to 
 			<p>&copy; @DateTime.Now.Year - @AppSettings.Options.SiteTitle</p>
 		Add to the top of the page
 			@using Microsoft.Framework.OptionsModel
@@ -150,7 +150,7 @@ Exercise - Data Handling
 	Open a command prompt (Windows-R)
 	Change directory to the path you copied
 	Type:
-		 dnvm use  10.0.0-rc1-update1
+		 dnvm use  1.0.0-rc1-update1
 	You should see adding path
 	Type: 
 		dnx ef migrations Add WebApplicationMigration_1
