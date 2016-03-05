@@ -55,7 +55,7 @@ Add NuGet - Entity Framework - Try to update = Hopefully everyone can do this
 	Add the following classes to the same driver model
 	public class Vehicle
     {
-        public int VehicleId { get; set; }
+        public int Id { get; set; }
         public VehicleType VehicleType { get; set; }
         public VehicleMake VehicleMake { get; set; }
         public string VehicleModel { get; set; }
@@ -63,19 +63,19 @@ Add NuGet - Entity Framework - Try to update = Hopefully everyone can do this
 
     public class VehicleType
     {
-        public int VehicleTypeId { get; set; }
+        public int Id { get; set; }
         public string VehicleTypeName { get; set; }
     }
 
     public class VehicleMake
     {
-        public int MakeId { get; set; }
+        public int Id { get; set; }
         public string VehicleMakeName { get; set; }
     }
 
     public class Driver
     {
-        public int DriverId { get; set; }
+        public int Id { get; set; }
         public string DriverName { get; set; }
         public Vehicle Vehicle { get; set; }
     }
@@ -190,7 +190,7 @@ Now it is time to make the database
                 resultSet.Add(
                     new DriverInfo
                     {
-                        DriverId = driver.DriverId,
+                        DriverId = driver.Id,
                         DriverName = driver.DriverName,
                         Manufacture = driver.Vehicle.VehicleMake.Name,
                         Model = driver.Vehicle.VehicleModel,
@@ -208,7 +208,7 @@ Now it is time to make the database
 		If (driver == null) return new DriverInfo();
 		return new DriverInfo
         {
-                DriverId = driver.DriverId,
+                DriverId = driver.Id,
                 DriverName = driver.DriverName,
                 Manufacture = driver.Vehicle.VehicleMake.Name,
                 Model = driver.Vehicle.VehicleModel,
