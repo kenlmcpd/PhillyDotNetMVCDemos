@@ -1,0 +1,21 @@
+﻿
+Run in Browser for US
+
+Run with Postman for France and Spain
+
+http://localhost:39322/
+
+Add Header variables
+
+	Accept-Language		es-ES
+
+	Accept-Language		fr
+
+	
+	The user is sent to the correct globalization based on their browser language 
+
+	The resource files dictate the language
+
+	The localization page (http://localhost:39322/home/Locpage) is supposed to change the language 
+	dynamically - however I could not get it working properly
+
