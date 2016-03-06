@@ -50,17 +50,20 @@ Exercise - No longer need to inherit from Controller
 Exercise - Configuration with Dependency Injection
 
 	Open config.json
-	Create a section named; AppSettings and 
-	Add:
-		"PDNTest":  "It Works"
+	Create a section named; AppSettings:
+	
+	"AppSettings": {
+    		"SiteTitle": "Code Camp Demo",
+    		"Version":  "1.0.0.1"
+  	},
 	Feel freee to add something else using the same json format
-	Add a new class named AppSettings
+	Right click on Models, Add a new class named AppSettings
 	Add the following properties
 
 	public class AppSettings
    	{
     	 public string SiteTitle { get; set; }
-    	 public string PDNTest { get; set; }
+    	 public string Version { get; set; }
 		 // add others here
    	}
 
@@ -72,15 +75,36 @@ Exercise - Configuration with Dependency Injection
 	Open the home controller
 		Add:
 			 using Microsoft.Extensions.OptionsModel;
-		Add a constructor
+			 using Demo7_MVC6.Models;
+			 
+		Add a constructor:
 
 			public HomeController(IOptions<AppSettings> appSettings) 
 			{
-				var test = appSettings.Options.PDNTest;
-				var test2 = test;
+				var test = appSettings.Value.SiteTitle;
+            			var test2 = test;
 			}
 	
 	Put a breakpoint on the test2 line and run solution
+	Stop from running
+	
+	Open the Views Folder
+	Open the Shared Folder
+	Open _Layout.cshtml
+	
+	At the top of the page add:
+	
+	@using Microsoft.Extensions.OptionsModel;
+	@using Demo7_MVC6.Models;
+	@inject IOptions<AppSettings> AppSettings
+	
+	Change the Title tag to:
+	<title>@ViewData["Title"] - @AppSettings.Value.SiteTitle</title>
+	
+	Change the Page Header:
+	<a asp-controller="Home" asp-action="Index" class="navbar-brand">@AppSettings.Value.SiteTitle</a>
+	
+	Run Project
 
 ==============================================
 
@@ -110,14 +134,54 @@ Exercise - Bootstrap Overview
 		Save and refresh the page
 		Put Navbar-fixed-top back
 
-	Change the footer
-		Change 2016 – WebApplication1 to 
-			<p>&copy; @DateTime.Now.Year - @AppSettings.Options.SiteTitle</p>
-		Add to the top of the page
-			@using Microsoft.Framework.OptionsModel
-			@using WebApplication1 
-			@inject IOptions<AppSettings> AppSettings
-		Stop and rerun the application
+==============================================
+
+Exercise - Tag Helpers
+	If running, stop the solution
+	
+	Create a folder in the project named TagHelpers
+	Create a class in that folder named WebsiteInformation.cs
+	
+	Add these using statements:
+		using Demo7_MVC6.Models;
+		using Microsoft.AspNet.Razor.TagHelpers;
+		using Microsoft.Extensions.OptionsModel;
+		
+	Replace the class code with:
+	
+	[HtmlTargetElement("Website-Information")]
+    	public class WebsiteInformation : TagHelper
+    	{
+        	public WebsiteInformation(IOptions<AppSettings> appSettings)
+        	{
+            		_appSettings = appSettings.Value;
+        	}
+
+        	private AppSettings _appSettings;
+
+        	public override void Process(TagHelperContext context, TagHelperOutput output)
+        	{
+            		output.TagName = "div";    // Replaces <footer> with <div> tag
+            		output.Content.SetHtmlContent(
+                    		$@"&copy; {DateTime.Today.Year} - {_appSettings.SiteTitle} 
+                    			<span style='color:white;'>Build: {_appSettings.Version}</span>");
+            		output.TagMode = TagMode.StartTagAndEndTag;
+        	}
+	 }
+	 
+	 Open _Layout.cshtml
+	 Add:
+	 @addTagHelper "*, Demo7-MVC6"
+	 
+	 Change the footer to:
+	 <footer>
+                @*<p>&copy; 2016 - Demo7_MVC6</p>*@
+                <website-information></website-information>
+            </footer>
+	 
+	 Run the application
+	 Look at footer, Highlight Build Info
+
 
 ==============================================
 
