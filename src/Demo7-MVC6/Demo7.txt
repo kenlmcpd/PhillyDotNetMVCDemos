@@ -174,8 +174,9 @@ Exercise - Data Handling
 	Copy the Home View Folder and paste it back to the Views folder
 	Rename it to Drivers
 	Open the Drivers/index view
-	Delete all the content
+	Delete all the body content (Leave the @{ ViewData["Title".....)
 	Replace with
+
 
 <div class="row">
     <br />
@@ -239,17 +240,84 @@ Exercise - Data Handling
 </div>
 
 <div class="container spacer" id="PutForm">
-    <div class="row">Put Data To Api</div>
+    <form id="PostForm">
+        <div class="row">
+            <div class="col-md-4 align-right"> </div>
+            <div class="col-md-4">
+                <h1>Put Data To Api</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 align-right">DriverId:</div>
+            <div class="col-md-4">
+                <input type="text" id="putdriverid" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 align-right">Driver Name:</div>
+            <div class="col-md-4">
+                <input type="text" id="putdrivername" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 align-right">Vehicle Type:</div>
+            <div class="col-md-4">
+                <input type="text" id="puttype" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 align-right spacer10">Manufacture:</div>
+            <div class="col-md-4 spacer10">
+                <input type="text" id="putmanufacture" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 align-right spacer10">Model:</div>
+            <div class="col-md-4 spacer10">
+                <input type="text" id="putmodel" />
+            </div>
+        </div>
+        <div class="row">
+            <div id="PutMessage" class="col-md-4"> </div>
+            <div class="col-md-4 align-right spacer25">
+                <input class="btn btn-success" type="button" id="putsubmit" value="Put Data to Api" />
+            </div>
+        </div>
+    </form>
 </div>
 
 
 <div class="container spacer" id="GetForm">
-    <div class="row">Get Data From Api</div>
+    <div class="row">
+        <div class="col-md-4 align-right"> </div>
+        <div class="col-md-4">
+            <h1>Get Data From Api</h1>
+        </div>
+    </div>
     <div id="getresult"></div>
 </div>
 
 <div class="container spacer" id="DelForm">
-    <div class="row">Delete Data From Api</div>
+    <form id="DeleteForm">
+        <div class="row">
+            <div class="col-md-4 align-right"> </div>
+            <div class="col-md-4">
+                <h1>Delete Data From Api</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 align-right">DriverId:</div>
+            <div class="col-md-4">
+                <input type="text" id="deletedriverid" />
+            </div>
+        </div>
+        <div class="row">
+            <div id="deleteMessage" class="col-md-4"> </div>
+            <div class="col-md-4 align-right spacer25">
+                <input class="btn btn-success" type="button" id="deletesubmit" value="Delete Data from Api" />
+            </div>
+        </div>
+    </form>
 </div>
 
 
@@ -263,23 +331,33 @@ Exercise - Data Handling
 
             $("#PostFormBtn").click(function() {
                 hideall();
+                $("#postdrivername").val('');
+                $('#posttype').val('');
+                $('#postmanufacture').val('');
+                $('#postmodel').val('');
                 $("#PostForm").show(600);
             });
 
             $("#PutFormBtn").click(function() {
                 hideall();
+                $("#putdriverid").val('');
+                $("#putdrivername").val('');
+                $('#puttype').val('');
+                $('#putmanufacture').val('');
+                $('#putmodel').val('');
                 $("#PutForm").show(600);
             });
 
             $("#GetFormBtn").click(function() {
                 hideall();
+                $("#getresult").html('');
                 $("#GetForm").show(600);
 
-                $.get("~/api/drivers", function (data) {
-                    alert(data);
+                $.get("/api/drivers", function (data) {
                     $.each(data, function() {
-                        alert(this.name);
-                        $("#getresult").append(this + "<hr/>");
+                        $("#getresult").append("<br/> (" + this.DriverId + ") " + this.DriverName + " drives a " +
+                            this.Manufacture + ", " + this.Model + " which is a " +
+                            this.VehicleType + "<hr/>");
                     });
                 });
             });
@@ -299,20 +377,60 @@ Exercise - Data Handling
                     Model: $('#postmodel').val()
                 }
 
-                var request = $.ajax({
+                 $.ajax({
                     dataType: 'json',
-                    contentType: 'application/x-www-form-urlencoded',
-                    //contentType: 'application/json; charset=utf-8',
-                    url: '~/api/drivers',
+                    contentType: 'application/json; charset=utf-8', 
+                    url: '/api/drivers',
                     type: 'Post',
-                    data: driverInfo 
-                    });
-                request.done(function (xhr, textstatus) {
-                    $('#PostMessage').append("<h3>Driver Saved</h3>" + xhr.status + " " + textstatus);
-                });
+                    data: JSON.stringify(driverInfo),
+                    success: function (data) {
+                        $('#PostMessage').append("<h3>Driver Saved</h3>");
+                    },
+                    error: function (request, status, error) {
+                        $('#PostMessage').append("<h3>Failed to save data</h3>");
+                    }                    
+                });               
+            });
 
-                request.fail(function (xhr, textstatus) {
-                    $('#PostMessage').append("<h3>Failed to save data</h3><br/>" + xhr.status + " " + textstatus);
+            $('#putsubmit').click(function () {
+
+                var driverInfo =
+                {
+                    DriverId: $('#putdriverid').val(),
+                    DriverName: $('#putdrivername').val(),
+                    VehicleType: $('#puttype').val(),
+                    Manufacture: $('#putmanufacture').val(),
+                    Model: $('#putmodel').val()
+                }
+
+                $.ajax({
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    url: '/api/drivers/' + $('#putdriverid').val(),
+                    type: 'Put',
+                    data: JSON.stringify(driverInfo),
+                    success: function (data) {
+                        $('#PutMessage').append("<h3>Driver updated</h3>");
+                    },
+                    error: function (request, status, error) {
+                        $('#PutMessage').append("<h3>Failed to update data</h3>");
+                    }
+                });
+            });
+
+            $('#deletesubmit').click(function () {
+                                
+                $.ajax({
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    url: '/api/drivers/' + $('#deletedriverid').val(),
+                    type: 'Delete',
+                    success: function (data) {
+                        $('#deleteMessage').append("<h3>Driver deleted</h3>");
+                    },
+                    error: function (request, status, error) {
+                        $('#deleteMessage').append("<h3>Failed to delete data</h3>");
+                    }
                 });
             });
         });
@@ -328,19 +446,28 @@ Exercise - Data Handling
     </script>
 }
 
+
+
+
+
 	Open Views/Shared/_layout
 	Modify the last menu item to go to your new Drivers/index page
 	Run and test the application
+	Create a Driver
+	Update a Driver
+	Delete a Driver
 
 ==============================================
 
 Exercise - Identity and Authorization
 	
 	Add identity to DriversApi.cs
+		Add  using Microsoft.AspNet.Authorization;
 		Add [Authorize] above the class
 		Add [AllowAnonymous] above both Gets()
 
 	Run the application
+	Try doing a Post or Put
 	Login / Create a user
 	Retest the create and update api
 
