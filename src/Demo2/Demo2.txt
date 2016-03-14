@@ -1,10 +1,12 @@
 ﻿Create a ASP.NET5 Application
 
 	Create a new project (web)
-	Make sure you have selected the latest version of the .net framework in the dropdown. I probably already is set
+	Make sure you have selected the latest version of the .net framework in the dropdown. It is probably already set
 	Uncheck the Add Application Insights to the project
+	Make sure the source control checkbox is unchecked.
 	Don’t worry about the name, just click OK
 	Under ASP.NET 5 Templates, Select Empty
+	Make sure the Azure checkbox is unchecked
 	Click OK
 	Click on IIS Express to run the application
 	Stop the application 
