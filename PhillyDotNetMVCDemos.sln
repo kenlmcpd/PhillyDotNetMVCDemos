@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B97C45C4-66DC-46CB-95A4-BA11C9C8A371}"
 EndProject
@@ -22,11 +22,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo2-EmptyApplication", "D
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Demo3-CustomRoute", "src\CustomRouteDemo\Demo3-CustomRoute.xproj", "{F46FD60E-A9A5-455C-8532-174CC0BD124B}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Demo5-Localization", "src\Demo5-Localization\Demo5-Localization.xproj", "{E695AF50-5F4C-472F-9DD7-D2D5CA44F31C}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Demo4-Localization", "src\Demo5-Localization\Demo4-Localization.xproj", "{E695AF50-5F4C-472F-9DD7-D2D5CA44F31C}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Demo6-WebApi", "src\Demo6-WebApi\Demo6-WebApi.xproj", "{70E1B32F-3973-4F56-87B8-1333ADF8D0C4}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Demo5-WebApi", "src\Demo6-WebApi\Demo5-WebApi.xproj", "{70E1B32F-3973-4F56-87B8-1333ADF8D0C4}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Demo7-MVC6", "src\Demo7-MVC6\Demo7-MVC6.xproj", "{6FB0488D-7577-4814-B522-2FE83B8423AA}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Demo6-MVC6", "src\Demo7-MVC6\Demo6-MVC6.xproj", "{6FB0488D-7577-4814-B522-2FE83B8423AA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo8-Deployment", "Demo8-Deployment", "{7565E8E6-A373-4CA1-81E7-B4E7F78BD451}"
 	ProjectSection(SolutionItems) = preProject
