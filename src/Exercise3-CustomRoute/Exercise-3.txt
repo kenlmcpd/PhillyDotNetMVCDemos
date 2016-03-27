@@ -1,4 +1,36 @@
 ﻿
+Open Startup
+	Under the Configure Method, look for app.UseMvc(routes =>
+	Add this route: 
+			routes.DefaultHandler = new LocalizedRoute(routes.DefaultHandler);
+	(Make sure it is before the default route)
+
+Open the LocalizedRoute Class
+	Within the users dictionary add the following (or make up your own names)
+			{ "Javier", "es-ES" },
+            { "Rob", "en-CA" },
+            { "Ken", "en-US" },
+
+Review the Rest of the RouteHandler Code
+
+Open LocaleAttribute
+	Add The following Attribute 
+		public LocaleAttribute(string locale)
+            : base("locale", routeValue: locale, blockNonAttributedActions: true)
+        {
+        }
+
+Open the controllers
+	Add the correct Attribute to the controller
+		Canada: Add [Locale("en-CA")] above the class name
+		Spain:  Add [Locale("es-ES")] above the class name
+		US:     Add  [Locale("en-US")] above the class name
+
+Open the OrdersController
+	Notice we are just returning a string 
+
+Compile and run the application
+
 Run with Postman
 
 http://localhost:38215/orders/1

@@ -3,7 +3,7 @@ using Microsoft.AspNet.Mvc;
 
 namespace CustomRouteDemo.Controllers.Canada
 {
-    [Locale("en-CA")]
+    // Put attribute here
     public class OrdersControlller : Controller
     {
         public string Index()

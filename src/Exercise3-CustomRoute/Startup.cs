@@ -25,7 +25,7 @@ namespace CustomRouteDemo
 
             app.UseMvc(routes =>
             {
-                routes.DefaultHandler = new LocalizedRoute(routes.DefaultHandler);
+                
                 routes.MapRoute("default", "{controller}/{action}");
             });
         }

@@ -6,9 +6,6 @@ namespace CustomRouteDemo
 {
     public class LocaleAttribute : RouteConstraintAttribute
     {
-        public LocaleAttribute(string locale)
-            : base("locale", routeValue: locale, blockNonAttributedActions: true)
-        {
-        }
+        // Add here
     }
 }
