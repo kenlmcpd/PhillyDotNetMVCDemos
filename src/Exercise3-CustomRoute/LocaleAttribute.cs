@@ -4,8 +4,10 @@ using Microsoft.AspNet.Mvc.Routing;
 
 namespace CustomRouteDemo
 {
-    public class LocaleAttribute : RouteConstraintAttribute
-    {
-        // Add here
-    }
+    // Uncomment first
+
+    //public class LocaleAttribute : RouteConstraintAttribute
+    //{
+    //    // Add here
+    //}
 }

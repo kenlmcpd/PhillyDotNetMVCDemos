@@ -1,4 +1,6 @@
-﻿
+﻿@using System.Globalization
+@using System.Threading.Tasks
+
 
 @{
     Layout = "/Views/Shared/_LocalizationLayout.cshtml";
@@ -6,25 +8,13 @@
     var culture = System.Globalization.CultureInfo.CurrentUICulture;
 }
 
-<p>This is not working yet</p>
 
-@LocalView["Hello there!!"].
-@LocalView.GetString("Hi", "John", @date, @date.DayOfWeek)
+<h1>Example using IViewLocalizer</h1>
 
-<p>Culture is @culture</p>
+<h2>@ViewBag.Message</h2>
 
-@LocalView.WithCulture(culture)["LearnMore2"].Value
+<h3>Culture is @culture</h3>
 
+<h4>@date</h4>
 
-@ViewData["LearnMore2"]
-
-
-  @*@<h1>Example using IViewLocalizer</h1>
-    <h2>@LocalView["Hello there!!"].Value</h2>
-    <h2>@LocalView["LearnMore"]</h2>
-    <h2>@LocalView["LearnMore2"]</h2>
-    <h2>@LocalView["LearnMore"].Value</h2>
-    <h2>@LocalView["LearnMore2"].Value</h2>
-
-     @LocalView["Learn More"].ResourceNotFound*@
 

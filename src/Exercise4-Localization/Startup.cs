@@ -18,33 +18,15 @@ namespace Demo5_Localization
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddLocalization(options => options.ResourcesPath = "Resources");
-
-            services
-                .AddMvc()
-                .AddViewLocalization(options => options.ResourcesPath = "Resources")              
-                .AddDataAnnotationsLocalization();
-
-            
+            // Replace this:
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
         {
-            var supportedCultures = new List<CultureInfo>
-            {
-                new CultureInfo("fr"),
-                new CultureInfo("es-ES"),
-            };
+            // Add Code Here
 
-
-            var requestLocalizationOptions = new RequestLocalizationOptions
-            {
-                SupportedCultures = supportedCultures,
-                SupportedUICultures = supportedCultures
-            };
-
-            app.UseRequestLocalization(requestLocalizationOptions, defaultRequestCulture: new RequestCulture("en-US"));
             app.UseMvcWithDefaultRoute();
             app.UseIISPlatformHandler();
         }

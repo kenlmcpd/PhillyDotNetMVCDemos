@@ -1,13 +1,14 @@
-
-
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Localization;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Globalization;
-using Microsoft.Extensions.Localization;
-using Microsoft.Extensions.OptionsModel;
 
-namespace Demo5_Localization.Controllers
+// For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+
+namespace Exercise4_Localization.Controllers
 {
     public class HomeController : Controller
     {
@@ -15,7 +16,7 @@ namespace Demo5_Localization.Controllers
 
         public HomeController(IHtmlLocalizer<HomeController> localizer)
         {
-            _localizer = localizer;            
+            _localizer = localizer;
         }
 
         public IActionResult Index()
@@ -23,13 +24,14 @@ namespace Demo5_Localization.Controllers
             return View();
         }
 
+
         public IActionResult Localization()
         {
-            var result = _localizer["LearnMore2"];
-            ViewData["Message"] = result;          
+            ViewData["Message"] = _localizer["Hi." + CultureInfo.CurrentCulture].Value;
             return View();
         }
 
-        string LearnMore2 = "testing";
+
+
     }
 }

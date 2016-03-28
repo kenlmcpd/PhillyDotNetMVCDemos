@@ -14,6 +14,7 @@ Open the LocalizedRoute Class
 Review the Rest of the RouteHandler Code
 
 Open LocaleAttribute
+	Uncomment the class
 	Add The following Attribute 
 		public LocaleAttribute(string locale)
             : base("locale", routeValue: locale, blockNonAttributedActions: true)
