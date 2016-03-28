@@ -1,0 +1,13 @@
+
+Since the internet will funtion poorly, we have added everything you need
+to the supplied memory stick
+
+Copy the .dnx folder to C:\Users\<username>\
+	Only overight if the file is newer!!!!!
+
+Copy the .nuget folder to C:\Users\<username>\
+	Only overight if the file is newer!!!!!
+
+Copy the solution to your Visual Studio project folder
+C:\Users\<username>\Documents\Visual Studio 2015\Projects
+
