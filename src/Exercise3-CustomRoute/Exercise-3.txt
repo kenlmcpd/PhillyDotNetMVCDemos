@@ -14,7 +14,6 @@ Open the LocalizedRoute Class
 Review the Rest of the RouteHandler Code
 
 Open LocaleAttribute
-	Uncomment the class
 	Add The following Attribute 
 		public LocaleAttribute(string locale)
             : base("locale", routeValue: locale, blockNonAttributedActions: true)
@@ -22,33 +21,27 @@ Open LocaleAttribute
         }
 
 Open the controllers
-	Add the correct Attribute to the controller
+	Add the correct Attribute to the product controller
 		Canada: Add [Locale("en-CA")] above the class name
 		Spain:  Add [Locale("es-ES")] above the class name
 		US:     Add  [Locale("en-US")] above the class name
 
-Open the OrdersController
+Open the HomeController
 	Notice we are just returning a string 
 
 Compile and run the application
 
 Run with Postman
 
-http://localhost:38215/orders/1
+http://localhost:38215/
+With the header User and Javier
+With the header User and Rob
+With the header User and Ken
 
-
-Add Header variables
-
-User Javier
-
-	Will return the order conntroller in Spain
-
-User Rob 
-
-	Will return the order controller in Canada
-
-User Ken 
-	Will return the order controller in US
+http://localhost:38215/products
+With the header User and Javier
+With the header User and Rob
+With the header User and Ken
 
 
 The way it works, in startup the route structure points to LocalizedRoute 

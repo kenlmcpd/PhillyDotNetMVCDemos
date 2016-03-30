@@ -21,12 +21,14 @@ namespace CustomRouteDemo
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
         {
-            app.UseIISPlatformHandler();                     
+            app.UseIISPlatformHandler();
 
             app.UseMvc(routes =>
             {
-                
-                routes.MapRoute("default", "{controller}/{action}");
+                // Add route handler
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
 
