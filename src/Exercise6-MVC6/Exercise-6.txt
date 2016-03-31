@@ -49,7 +49,7 @@ Exercise - No longer need to inherit from Controller
 
 Exercise - Configuration with Dependency Injection
 
-	Open config.json
+	Open appsettings.json
 	Create a section named; AppSettings:
 	
 	"AppSettings": {
@@ -187,26 +187,45 @@ Exercise - Tag Helpers
 
 Exercise - Data Handling
 
-	Copy over the Models from the API
-		Change the namespace
-	Copy the driver context stuff to ApplicationDb Context
+	Copy DriverInfo.cs file from Exercise5 and paste it to the ViewModels Folder
+	Change the namespace to Demo7_MVC6.ViewModels
+
+	Copy the DriversModel.cs file from Exercise5 and paste it to the Models folder
+	change the namespace to Demo7_MVC6.Models
+
+	Since the main DbContext is now ApplicationDbContext, 
+	Cut the driver context code to ApplicationDb Context
+	Cut the four Dbset's and paste..
 		public Microsoft.Data.Entity.DbSet<Vehicle> Vehicles { get; set; }
         public Microsoft.Data.Entity.DbSet<VehicleType> VehicleTypes { get; set; }
         public Microsoft.Data.Entity.DbSet<VehicleMake> VehicleMakes { get; set; }
         public Microsoft.Data.Entity.DbSet<Driver> Drivers { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Vehicle>().Property(v => v.VehicleModel).IsRequired();
+	Cut the insides of OnModelCreating and paste into ApplicationDbContext's OnModelCreating...
+			modelBuilder.Entity<Vehicle>().Property(v => v.VehicleModel).IsRequired();
+            modelBuilder.Entity<Vehicle>().Property(v => v.VehicleMakeId).IsRequired();
+            modelBuilder.Entity<Vehicle>().Property(v => v.VehicleTypeId).IsRequired();
+
             modelBuilder.Entity<VehicleType>().Property(v => v.VehicleTypeName).IsRequired();
             modelBuilder.Entity<VehicleMake>().Property(v => v.VehicleMakeName).IsRequired();
+
             modelBuilder.Entity<Driver>().Property(v => v.DriverName).IsRequired();
-        }
+            modelBuilder.Entity<Driver>().Property(v => v.VehicleId).IsRequired();
+
+    Rename the builder variable to modelBuilder
+	also change base.OnModelCreating(modelBuilder);
+
+	Delete the rest remaining DriverContext class out of DriverModel.cs
+
+
 	Copy over the API controller into the controllers folder
-		Rename the namespace and rename the file and class to DriversApi
+		Rename the namespace 
 		Make sure the class name and constructor are also DriversApiController
-		Change the base route to api/Drivers
-		Add a using statement pointing to the Models; and to ViewModels;
+		Remove the using Excercise5_WebApi.Models; reference
+		Add using Demo7_MVC6.Models;
+		Add using Demo7_MVC6.ViewModels;
+		Make sure the base route is api/Drivers
+		
 		Change DriversContext to ApplicationDbContext
 	Build to play it safe
 
@@ -221,7 +240,7 @@ Exercise - Data Handling
 		 dnvm use  1.0.0-rc1-update1
 	You should see adding path
 	Type: 
-		dnx ef migrations Add WebApplicationMigration_1
+		dnx ef migrations Add initial
 	Type: 
 		dnx ef database update
 
@@ -231,7 +250,8 @@ Exercise - Data Handling
 	Run Application
 	Run Postman with new url and input some data
 		 Add Drivers Controller
-	Right click on the HomeController, copy it and paste it
+
+	Right click on the HomeController, copy it and paste it to create new controller
 	Rename the copied version to DriversController.cs
 	Rename the class and constructor to DriversController
 	Delete the About, Contact and Error methods
@@ -537,7 +557,7 @@ Exercise - Identity and Authorization
 
 ==============================================
 
-Exercise - Rob Add Bower and Grunt
+Exercise - Rob Add Bower and Gulp
 
 
 
