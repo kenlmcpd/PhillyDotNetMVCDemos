@@ -121,7 +121,21 @@ Exercise - Bootstrap Overview
 		Change the button in each section to the 4 different button types
 			Default, primary, success, danger
 
+	Add a 4th Carousel screen
+		Copy this html
+			<li data-target="#myCarousel" data-slide-to="4"></li>
+		Paste it below the third <li button.  (these are the buttons on the bottom)
+		Copy the third carousel div (make sure you get all the contents)
+			<div class="item"> ... </div>
+		Paste it below the third div.
+		Change the text in the paragraph <p> so you know it is your new one
+
 	On bottom of the page change the column types to make it 3 columns
+	within the row div  <div class="row"> 
+		There are 4 columns - comment out or remove the last column
+		In doing this we now have 3 blanks in the page grid, we need to fix that
+		Change the remaining 3 columns to col-md-4 - this add up to the 12 columns 
+		in the page grid
 
 	Add a link to the menu
 	Open Shared/_layout.cshtml
