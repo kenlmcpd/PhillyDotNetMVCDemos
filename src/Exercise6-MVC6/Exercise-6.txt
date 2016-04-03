@@ -571,6 +571,65 @@ Exercise - Identity and Authorization
 
 ==============================================
 
+Exercise - Action Logging Filter
+
+	Right click on the Services folder
+		Click add, new class
+		Name the new class LoggingFilter
+
+	Open Startup.cs
+		Go the ConfigureServices method
+		Add:
+			services.AddLogging();            
+            services.AddSingleton<ILoggingFilter, LoggingFilter>();
+
+	Open the HomeController
+		Add:
+			using Demo7_MVC6.Services;
+
+		Add this attribute above the class name
+			[ServiceFilter(typeof(ILoggingFilter))]
+
+	Go back to the LoggingFilter class
+		Add:
+			using Microsoft.AspNet.Mvc.Filters;
+			using Microsoft.Extensions.Logging;
+	
+		Replace the namespace and class with:
+
+		namespace Demo7_MVC6.Services
+{
+    public interface ILoggingFilter
+    {
+
+    }
+    public class LoggingFilter : ActionFilterAttribute, ILoggingFilter
+    {
+        private ILogger _logger;
+        public LoggingFilter(ILogger<LoggingFilter> logger)
+        {
+            _logger = logger;
+        }
+
+        public override void OnActionExecuting(ActionExecutingContext actionContext)
+        {
+            var controllerName = actionContext.RouteData.Values["controller"];
+            var actionName = actionContext.RouteData.Values["action"];
+            var controller = actionContext.Controller;
+            var http = actionContext.HttpContext;
+            var ip = http.Connection.RemoteIpAddress;
+            _logger.LogDebug("Startup info");
+        }
+
+        public override void OnActionExecuted(ActionExecutedContext actioncContext)
+        {
+            _logger.LogDebug("Log Completion info");
+        }
+    }
+}
+
+==============================================
+
 Exercise - Rob Add Bower and Gulp
 
 
