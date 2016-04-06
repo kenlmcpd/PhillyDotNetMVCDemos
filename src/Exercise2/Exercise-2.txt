@@ -1,6 +1,8 @@
-﻿Create a ASP.NET5 Application
+Create a ASP.NET5 Application
 
-	Create a new project (web)
+	Create a new project File->New->Project
+		Templates -> Visual C#->Web
+		Select ASP.NET Web Application
 	Make sure you have selected the latest version of the .net framework in the dropdown. It is probably already set
 	Uncheck the Add Application Insights to the project
 	Make sure the source control checkbox is unchecked
@@ -9,51 +11,64 @@
 	Make sure the Azure checkbox is unchecked
 	Click OK
 	Wait for the references to finish restoring
-	Click on IIS Express to run the application
+	Click on the Run button (IIS Express should be selected) and run the application
+		A web page should open with Hello World! on it.
 	Stop the application 
-	Change the IIS Express dropdown to web
-	Click on web
+	Change the Run button's dropdown from IIS Express to web
+	Run the applicaiton
 	Notice the web browser did not open
-	See Command Windows showing the url of the web listener
+	A command window should have opened
+	See in the Command Window you should see the url
 	Open that url in a web browser
+	The output should look the same
 	Stop the application
-	Under Solution Items, open global.json
-	Under WebApplicationx, expand properties and open launch settings
-		Change The applicationUrl to a different port
-		Change the run dropdown back to iis express 
-		Click on Run IIS Express
-			If not new number shut application down, make sure IIS Express is not running and run it again
-		Open project.json
-		In the commands type  --server.urls http://localhost:5102 after Microsoft.AspNet.Server.Kestrel 
-		Open launchSettings.json
-		Under Web and under "command":"web" type
-				"launchBrowser": true,
-				"launchUrl": http://localhost:5102,
-		Change back from IIS Express to web
-		Run the app – note the url in the command windows
-		The browser will open automatically
-		Shut down the web app
-		Open Startup.cs
-		Notice Static Main – just like a console app
-		Notice app.run, you can create an entire web app here
-			You can read static files, do things dynamically, use Angular, web forms or mvc
-		Right click on WebApplicaitonx and select properties
-			Application tab has DNX SDK
-			Debug tab allows you to launch the url (it creates what we did)
+	In the solution explorer...
+		Under Solution Items, open global.json
+		Under the project folder, expand Properties and open launchSettings.json
+			Change The applicationUrl to a 5103
+			Change the run dropdown back to IIS Express 
+			Start the application
+				If not new number shut application down, make sure IIS Express is not running and run it again
+			Open project.json
+			In the commands section change the web entry by adding --server.urls http://localhost:5102 after Microsoft.AspNet.Server.Kestrel
+				the line should now look like "web": "Microsoft.AspNet.Server.Kestrel --server.urls http://localhost:5102" 
+			Open launchSettings.json
+			Under Web and under "commandName":"web" type
+					"launchBrowser": true,
+					"launchUrl": "http://localhost:5102",
+			Change back from IIS Express to web in the Run button
+			Run the app – note the url in the command windows
+			The browser will open automatically
+			Shut down the web app
+			Open Startup.cs
+			Notice static void Main – just like a console app
+			Notice app.run, you can create an entire web app here
+				You can read static files, do things dynamically, use AngularJS, web forms or MVC
+			Right click on the project folder and select Properties
+				Application tab has DNX SDK
+				Debug tab allows you to launch the url (it creates what we did)
 	
 	Add Angular page
-		Open Manage NuGet
-			Search for and install Microsoft.AspNet.StaticFiles
+		Open the project.json file
+			In the dependencies section add a comma to the last line and then add a new line
+			start typeing "Microsoft.AspNet.StaticFiles": (you should have seen some intellisense).
+			For the type you should select 1.0.0-rc1-final
+			the line should look like this: "Microsoft.AspNet.StaticFiles": "1.0.0-rc1-final"
 		Open Startup.cs
-			Change the signature of Configure to:
-				public void Configure(IApplicationBuilder application, IApplicationEnvironment environment)
-		Between use iis and run, type: 
+			Add the following using statement:
+				using Microsoft.Extensions.PlatformAbstractions;
+			Change the signature of Configure method to:
+				public void Configure(IApplicationBuilder app, IApplicationEnvironment environment)
+		After the app.UseIISPlatformHandler(); line enter the following: 
 			var indexPage = System.IO.File.ReadAllText($"{environment.ApplicationBasePath}/index.html");
-		Change the Hello World to indexPage
-	Right click on the project and add new item
-		select client side and html page
-		change the name to index.html
+		Change the "Hello World!" to indexPage
+	Right click on the project select Add->New Item...
+		select Client-side on the left tree (under DNX)
+		Select HTML Page
+		set the name to index.html
+		click Add
 	Update the html to angular
+		The new HTML page should have opened - if it did not then open it now.
 		Within the body tags add:
 
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
