@@ -373,4 +373,6 @@ Now it is time to make the database
 	
 	===========================
 
+	Swagger has been installed for you 
 	Go to: http://localhost:49787/swagger/ui/index.html  
+
