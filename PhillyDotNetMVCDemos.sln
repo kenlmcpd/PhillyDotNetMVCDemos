@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B97C45C4-66DC-46CB-95A4-BA11C9C8A371}"
 EndProject
@@ -31,12 +31,12 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Exercise4-Localization", "s
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Exercise5-WebApi", "src\Exercise5-WebApi\Exercise5-WebApi.xproj", "{70E1B32F-3973-4F56-87B8-1333ADF8D0C4}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Exercise6-MVC6", "src\Exercise6-MVC6\Exercise6-MVC6.xproj", "{6FB0488D-7577-4814-B522-2FE83B8423AA}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Begin-Here", "Begin-Here", "{C36DF56C-2C18-45A6-8973-B287ED68DE03}"
 	ProjectSection(SolutionItems) = preProject
 		Setup.txt = Setup.txt
 	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Exercise6-MVC6", "src\Exercise6-MVC6\Exercise6-MVC6.xproj", "{6FB0488D-7577-4814-B522-2FE83B8423AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,7 +71,7 @@ Global
 		{F46FD60E-A9A5-455C-8532-174CC0BD124B} = {B97C45C4-66DC-46CB-95A4-BA11C9C8A371}
 		{E695AF50-5F4C-472F-9DD7-D2D5CA44F31C} = {B97C45C4-66DC-46CB-95A4-BA11C9C8A371}
 		{70E1B32F-3973-4F56-87B8-1333ADF8D0C4} = {B97C45C4-66DC-46CB-95A4-BA11C9C8A371}
-		{6FB0488D-7577-4814-B522-2FE83B8423AA} = {B97C45C4-66DC-46CB-95A4-BA11C9C8A371}
 		{C36DF56C-2C18-45A6-8973-B287ED68DE03} = {B97C45C4-66DC-46CB-95A4-BA11C9C8A371}
+		{6FB0488D-7577-4814-B522-2FE83B8423AA} = {B97C45C4-66DC-46CB-95A4-BA11C9C8A371}
 	EndGlobalSection
 EndGlobal

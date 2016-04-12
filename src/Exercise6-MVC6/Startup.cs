@@ -44,11 +44,16 @@ namespace Demo7_MVC6
                 .AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
 
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
             services.AddMvc();
+
+            services.AddLogging();
+            services.AddSingleton<ILoggingFilter, LoggingFilter>();
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();

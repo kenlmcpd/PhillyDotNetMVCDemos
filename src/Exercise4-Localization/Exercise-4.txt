@@ -1,15 +1,5 @@
 ﻿
 Open Startup
-	Go to the ConfigureServices Method
-		Replace services.AddMvc() with this code:
-
-			services.AddLocalization(options => options.ResourcesPath = "Resources");
-
-			services
-                .AddMvc()
-                .AddViewLocalization(options => options.ResourcesPath = "Resources")              
-                .AddDataAnnotationsLocalization();
-
 	Go to the Configure Method 
 		Add this code to the method before the defualt settings
 
@@ -27,17 +17,20 @@ Open Startup
 
 				app.UseRequestLocalization(requestLocalizationOptions, defaultRequestCulture: new RequestCulture("en-US"));
 
+	Go to the ConfigureServices Method
+		Replace services.AddMvc() with this code:
 
-Right Click on the Resources folder
-	Select Add New Item
-	Locate Resource file, Naming is VERY important
-		You Must name it: Exercise4_Localization.Controllers.HomeController  (don't for get the .resx extension)
+			services.AddLocalization(options => options.ResourcesPath = "Resources");
 
-		Add the following to the resource file:
-		(Name)		(Value)
-		Hi.en-US	Hello in English
-		Hi.fr-FR	Bonjour de France
-		Hi.en-ES	Hola de España
+			services
+                .AddMvc()
+                .AddViewLocalization(options => options.ResourcesPath = "Resources")              
+                .AddDataAnnotationsLocalization();
+
+Open the Resources Folder
+	Open each of the resource files
+		Notice each converts English to either French or Spanish
+
 
 Open the View Folder and then the Home Folder
 	Look at the layout pages each view uses
@@ -59,13 +52,13 @@ Add Header variables
 
 	Accept-Language		es-ES
 
-	Accept-Language		fr-FR
+	Accept-Language		fr
 
-
-Now change the URL to http://localhost:39322/home/Localization
-
-Set the language to es-ES and click send, fr-FR and click send and finally to en-US and click send
 	
+	The user is sent to the correct globalization based on their browser language 
 
+	The resource files dictate the language
 
+	The localization page (http://localhost:39322/home/Locpage) is supposed to change the language 
+	dynamically - however I could not get it working properly
 

@@ -6,9 +6,9 @@ namespace CustomRouteDemo.Controllers
     public class HomeControlller : Controller
     {
         [HttpGet("")]
-        public string Index(int id)
+        public string Index()
         {
-            return "Hello from " + RouteData.Values["locale"] + ".";
+            return "<h1>Home</h1><p>Hello from " + RouteData.Values["locale"] + ".</p>";
         }
     }
 }

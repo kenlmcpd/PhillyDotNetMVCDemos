@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Excercise5_WebApi.Models;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Data.Entity;
 
-namespace Demo6_WebApi
+namespace Excercise5_WebApi
 {
     public class Startup
     {
@@ -30,6 +32,11 @@ namespace Demo6_WebApi
             services.AddMvc();
 
             services.AddSwaggerGen();
+
+            services.AddEntityFramework()
+                .AddSqlServer()
+                .AddDbContext<DriverContext>(ef => ef.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,7 +46,9 @@ namespace Demo6_WebApi
             loggerFactory.AddDebug();
 
             app.UseIISPlatformHandler();
+
             app.UseStaticFiles();
+
             app.UseMvc();
 
             app.UseSwaggerGen();

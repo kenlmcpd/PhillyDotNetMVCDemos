@@ -19,4 +19,4 @@ For WIN use: CLR
 Look at the C:\Users\<username>\.dnx\packages
 This is where the local copy of the nuget packages live on your system. 
 
-
+Help is in a github project: https://docs.asp.net/en/latest/

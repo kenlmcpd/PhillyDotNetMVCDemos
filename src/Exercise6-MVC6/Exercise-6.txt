@@ -28,7 +28,7 @@ Review The New Look
 	Models – our domain models
 	Services – Notice MessageServices – These are used with account
 	Views – razor and Jquery – no difference
-	Open Config.json – Notice we have Connection and App Settings section
+	Open appsettings.json – Notice we have Connection and App Settings section
 	Open project.json – Notice the differences
 	Open Startup – Notice the differences
 
@@ -43,7 +43,7 @@ Exercise - No longer need to inherit from Controller
 		Write return new ContentResult() {Content = "THIS IS MY TEST"};
 		Run application
 	
-	Remove all the commented code
+	Restore the controller to its original state? Remove all the commented code
 
 ==============================================
 
@@ -56,8 +56,9 @@ Exercise - Configuration with Dependency Injection
     		"SiteTitle": "Code Camp Demo",
     		"Version":  "1.0.0.1"
   	},
-	Feel freee to add something else using the same json format
-	Right click on Models, Add a new class named AppSettings
+	Feel free to add something else using the same json format.
+
+	Right click on the Models folder, Add a new class named AppSettings
 	Add the following properties
 
 	public class AppSettings
@@ -69,7 +70,7 @@ Exercise - Configuration with Dependency Injection
 
 	Open Startup.cs
 		Go to the public void ConfigureServices(IServiceCollection services)  method
-		Add:
+		Add: 
 			services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
 	Open the home controller
@@ -87,6 +88,7 @@ Exercise - Configuration with Dependency Injection
 	
 	Put a breakpoint on the test2 line and run solution
 	Stop from running
+	Remove teh breakpoint
 	
 	Open the Views Folder
 	Open the Shared Folder
@@ -100,6 +102,7 @@ Exercise - Configuration with Dependency Injection
 	
 	Change the Title tag to:
 	<title>@ViewData["Title"] - @AppSettings.Value.SiteTitle</title>
+	*Note* if you type this in instead of copying it you should see intellisense working.
 	
 	Change the Page Header:
 	<a asp-controller="Home" asp-action="Index" class="navbar-brand">@AppSettings.Value.SiteTitle</a>
@@ -114,7 +117,7 @@ Exercise - Bootstrap Overview
 	Change the size of the web browser, to see how responsive design works
 
 	Open _layout.cshtml
-	View key class names in library
+	View key class names in library ???
 	Reminder BootStrap resides at wwwroot/lib
 	Open the Home index view 
 		Modify the text (User Choice in the 4 <div class="carousel-caption"> sections
@@ -142,7 +145,7 @@ Exercise - Bootstrap Overview
 		Add Menu item and - Notice the new way of setting url  
 
 	Review Navbar
-		Highlight navbar-inverse  and cut it out. 
+		In the first div in the body, Highlight navbar-inverse  and cut it out. 
 		Save and refresh the web page
 		Paste navbar-inverse back in and remove navbar-fixed-top
 		Save and refresh the page
@@ -175,17 +178,19 @@ Exercise - Tag Helpers
 
         	public override void Process(TagHelperContext context, TagHelperOutput output)
         	{
-            		output.TagName = "div";    // Replaces <footer> with <div> tag
+            		output.TagName = "p";    // Replaces out tag helper with a paragraph tag
             		output.Content.SetHtmlContent(
-                    		$@"&copy; {DateTime.Today.Year} - {_appSettings.SiteTitle} 
-                    			<span style='color:white;'>Build: {_appSettings.Version}</span>");
+                    		$"&copy; {DateTime.Today.Year} - {_appSettings.SiteTitle}); 
+                    			
             		output.TagMode = TagMode.StartTagAndEndTag;
         	}
 	 }
 	 
+	 open _ViewImports.cshtml
+	 If we had a tag helper that we wanted to use on multiple pages this is where we would put it.
 	 Open _Layout.cshtml
 	 Add:
-	 @addTagHelper "*, Demo7-MVC6"
+	 @addTagHelper "*, Demo7_MVC6"
 	 
 	 Change the footer to:
 	 <footer>
@@ -194,7 +199,51 @@ Exercise - Tag Helpers
             </footer>
 	 
 	 Run the application
-	 Look at footer, Highlight Build Info
+	 Look at footer
+	 right click and select inspect element - see that our tag has been replaced with a paragraph mark.
+	 close the application and go back to the taghelper.
+	 add [HtmlTargetElement("copyright")] decoration before the class line.
+	 rebuild the solution
+	 close and open _layout page - after reopening the page the website-information tag should no longer be a different color.
+	 change the tag to copyright
+	 run it just to make sure it still works.
+	 modify the decoration to include a text value
+		[HtmlTargetElement("copyright", Attributes ="text")]
+	 rerun the application - does it still work?
+	 If we want it to work with either a text attribute or not we have to have both with and without
+	 Add     [HtmlTargetElement("copyright")] to the code and rerun - it should work now.
+	 Modify the taghelper to handle text - add the following two lines at the beginning of the Process method
+		    var textAttribute = context.AllAttributes["text"]?.Value.ToString();
+            if (string.IsNullOrEmpty(textAttribute)) { textAttribute = _appSettings.SiteTitle; }
+	 In the SetHtmlContent line change _appSettings.SiteTitle to textAttribute - run the code - should work as it did before.
+	 go back to the _Layout and change the <copyright> tag to include a text attribute - make it your name.
+	 rerun the app and make sure it works.
+	 inspect the element and we see the text attribute showing. 
+	 Go back to the taghelper code and add the following line
+	        output.Attributes.RemoveAll("text");
+	 rerun the code and inspect the element, the text attribute should be gone. 
+
+	 Add a taghelper to an existing tag
+	 right click on the taghelpers folder and add a new class called FooterTagHelper.cs
+	 Add the same using clause and inherit from TagHelper
+	 Decorate this class with the following
+		    [HtmlTargetElement("footer", Attributes ="copyright")]
+	 add the same constructor to the class so that we have access to the appsettings.
+	 Override the process method.
+	 Remove the copyright attribute from the output and add the SetHtmlContent line 
+	        output.Attributes.RemoveAll("copyright");
+			output.Content.SetHtmlContent($"<p>&copy; {DateTime.Today.Year} - {_appSettings.SiteTitle}</p>");
+	 Compile the code
+	 Close and open _Layout
+	 Modify the footer tag to include the copyright attribute - the footer tag should change color.
+	 Run the app - is it correct?
+		you may notice that our copyright tag that we added did not get rendered. Not a problem in this case
+		but it could be, so we need to make sure the children of the original tag is also rendered.
+	 Modify the taghelper code by changing the SetHtmlContent line to the following:
+	    output.Content.SetHtmlContent($"<p>&copy; {DateTime.Today.Year} - {_appSettings.SiteTitle}</p>{output.GetChildContentAsync().Result.GetContent()}");
+	 Rerun the you should not see both copyright notices at the bottom, one is from the footer tag and the other is from our copyright tag.
+	 clean up the code to only use one of the methods.
+
 
 
 ==============================================
@@ -627,6 +676,8 @@ Exercise - Action Logging Filter
         }
     }
 }
+
+
 
 ==============================================
 

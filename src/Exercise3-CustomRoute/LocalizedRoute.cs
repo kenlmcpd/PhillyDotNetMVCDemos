@@ -13,8 +13,10 @@ namespace CustomRouteDemo
 
         private readonly Dictionary<string, string> _users = new Dictionary<string, string>(StringComparer.Ordinal)
         {
-            // Add Here
-            
+            // Could be Database
+            { "Javier", "es-ES" },
+            { "Rob", "en-CA" },
+            { "Ken", "en-US" },
         };
 
         public LocalizedRoute(IRouter next)
@@ -31,10 +33,8 @@ namespace CustomRouteDemo
         public async Task RouteAsync(RouteContext context)
         {
             context.RouteData.Routers.Add(_next);
-
             var locale = GetLocale(context.HttpContext) ?? "en-US";
             context.RouteData.Values.Add("locale", locale);
-
             await _next.RouteAsync(context);
         }
 

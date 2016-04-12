@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -24,14 +24,14 @@ namespace Exercise4_Localization.Controllers
             return View();
         }
 
-
+        
         public IActionResult Localization()
         {
             ViewData["Message"] = _localizer["Hi." + CultureInfo.CurrentCulture].Value;
             return View();
         }
 
-
-
+        
+        
     }
 }

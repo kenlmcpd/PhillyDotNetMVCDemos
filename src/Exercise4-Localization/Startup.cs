@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Globalization;
 using Microsoft.AspNet.Localization;
 
-namespace Demo5_Localization
+namespace Exercise4_Localization
 {
     public class Startup
     {
@@ -18,14 +18,30 @@ namespace Demo5_Localization
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            // Replace this:
-            services.AddMvc();
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+            services
+                .AddMvc()
+                .AddViewLocalization(options => options.ResourcesPath = "Resources")
+                .AddDataAnnotationsLocalization();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
         {
-            // Add Code Here
+            var supportedCultures = new List<CultureInfo>
+            {
+                new CultureInfo("fr-FR"),
+                new CultureInfo("es-ES")
+            };
+
+            var requestLocalizationOptions = new RequestLocalizationOptions
+            {
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            };
+
+            app.UseRequestLocalization(requestLocalizationOptions, defaultRequestCulture: new RequestCulture("en-US"));
 
             app.UseMvcWithDefaultRoute();
             app.UseIISPlatformHandler();
@@ -34,9 +50,9 @@ namespace Demo5_Localization
         // Entry point for the application.
         public static void Main(string[] args)
         {
-            var host = new WebHostBuilder()                
+            var host = new WebHostBuilder()
                 .UseServer("Microsoft.AspNetCore.Server.Kestrel")
-                .UseStartup<Startup>()                
+                .UseStartup<Startup>()
                 .Build();
 
             host.Start();
